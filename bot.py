@@ -31,10 +31,10 @@ async def start(bot, message):
 @Bot.on_message(filters.chat(GROUPS))
 async def delete(user, message):
     try:
-       if message.from_user.id in ADMINS:
+       if message.from_user.id in ADMINS or message.from_user.id == NULL:
           return
        elif message.reply_to_message:
-           if (message.reply_to_message.via_bot and message.reply_to_message.via_bot.id == channel_id) or (message.via_bot and message.via_bot.id == channel_id):
+           if (message.reply_to_top_message_id == message.reply_to_message.via_bot.id == channel_id) or (message.via_bot and message.via_bot.id == channel_id):
                return 
        else:
           await asyncio.sleep(TIME)
