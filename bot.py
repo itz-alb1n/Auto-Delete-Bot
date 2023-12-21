@@ -13,7 +13,7 @@ ADMINS = []
 for usr in environ.get("ADMINS").split():
     ADMINS.append(int(usr))
 
-START_MSG = "<b>Hai {},\nI'm a private bot of @mh_world to delete group messages after a specific time</b>"
+START_MSG = "<b>Hai {},\nSorry Your're Not Authorised to Use Me.</b>"
 
 
 Bot = Client(name="auto-delete",
@@ -32,13 +32,11 @@ async def start(bot, message):
 async def delete(user, message):
     try:
        if message.from_user.id in ADMINS or message.from_user.id == NULL:
-          return
-       elif message.reply_to_message:
-           if (message.reply_to_top_message_id == message.reply_to_message.via_bot.id == channel_id) or (message.via_bot and message.via_bot.id == channel_id):
-               return 
+          return 
        else:
           await asyncio.sleep(TIME)
-          await Bot.delete_messages(message.chat.id, message.id)
+           if message.reply_to_message is None :
+               await Bot.delete_messages(message.chat.id, message.id)
     except Exception as e:
        print(e)
        
